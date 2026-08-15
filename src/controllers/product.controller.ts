@@ -155,7 +155,7 @@ export async function getProduct(
   try {
     const idOrSlug = req.params.idOrSlug;
 
-    if (!idOrSlug) {
+    if (typeof idOrSlug !== "string" || !idOrSlug) {
       throw new AppError(
         "Product ID or slug is required",
         400,
