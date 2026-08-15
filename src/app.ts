@@ -78,3 +78,5 @@ app.use("/api/products", productRouter);
  */
 app.use(notFoundHandler);
 app.use(errorHandler);
+
+export default app;

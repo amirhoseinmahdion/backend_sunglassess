@@ -26,7 +26,12 @@ const envSchema = z.object({
     .default("http://localhost:3000"),
 });
 
-const parsedEnv = envSchema.safeParse(process.env);
+const parsedEnv = envSchema.safeParse({
+  ...process.env,
+  DATABASE_URL:
+    process.env.DATABASE_URL ||
+    process.env.POSTGRES_PRISMA_URL,
+});
 
 if (!parsedEnv.success) {
   console.error(
