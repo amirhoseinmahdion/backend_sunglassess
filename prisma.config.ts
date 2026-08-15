@@ -3,13 +3,8 @@ import { defineConfig } from "prisma/config";
 
 const databaseUrl =
   process.env.DATABASE_URL ||
-  process.env.POSTGRES_PRISMA_URL;
-
-if (!databaseUrl) {
-  throw new Error(
-    "DATABASE_URL or POSTGRES_PRISMA_URL is required",
-  );
-}
+  process.env.POSTGRES_PRISMA_URL ||
+  "postgresql://build:build@127.0.0.1:5432/build";
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
