@@ -15,12 +15,25 @@ export const app = express();
 
 app.disable("x-powered-by");
 
+const allowedOrigins = new Set([
+  env.FRONTEND_URL,
+  "http://localhost:3000",
+  "http://127.0.0.1:3000",
+]);
+
 /**
  * CORS
  */
 app.use(
   cors({
-    origin: env.FRONTEND_URL,
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.has(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error("Origin is not allowed by CORS"));
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
